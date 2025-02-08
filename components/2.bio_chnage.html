@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Word Animation</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      body {
+        height: 100vh;
+        background-color: #333;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-family: monospace;
+      }
+      .container {
+        width: 20vw;
+        font-size: 2rem;
+        padding: 20px;
+        border: 2px solid white;
+        display: flex;
+        align-items: center;
+        gap: 5px;
+        border-radius: 5px;
+      }
+      .text {
+        display: inline-block;
+        font-weight: bold;
+      }
+      .first-text {
+        color: #fff;
+      }
+      .sec-text {
+        color: red;
+      }
+      .cursor {
+        display: inline-block;
+        width: 3px;
+        height: 1em;
+        background-color: #fff;
+        animation: blink 1s infinite;
+      }
+      @keyframes blink {
+        0%,
+        100% {
+          opacity: 1;
+        }
+        50% {
+          opacity: 0;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <span class="text first-text">I'm a </span>
+      <span
+        class="text sec-text"
+        data-words="Freelancer,Blogger,Youtuber"
+      ></span>
+      <span class="cursor"></span>
+    </div>
+    <script>
+      const textElement = document.querySelector(".sec-text");
+      const cursorElement = document.querySelector(".cursor");
+      const words = textElement.getAttribute("data-words").split(",");
+      let wordIndex = 0;
+      let charIndex = 0;
+      let isDeleting = false;
+
+      const typeText = () => {
+        const currentWord = words[wordIndex];
+
+        if (!isDeleting) {
+          textElement.textContent = currentWord.substring(0, charIndex + 1);
+          charIndex++;
+
+          if (charIndex === currentWord.length) {
+            isDeleting = true;
+            setTimeout(typeText, 2000);
+          } else {
+            setTimeout(typeText, 100);
+          }
+        } else {
+          textElement.textContent = currentWord.substring(0, charIndex - 1);
+          charIndex--;
+
+          if (charIndex === 0) {
+            isDeleting = false;
+            wordIndex = (wordIndex + 1) % words.length;
+            setTimeout(typeText, 500);
+          } else {
+            setTimeout(typeText, 50);
+          }
+        }
+      };
+
+      typeText();
+    </script>
+  </body>
+</html>
