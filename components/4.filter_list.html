@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Filter List</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        padding: 20px;
+      }
+      input {
+        width: 100%;
+        padding: 8px;
+        margin-bottom: 10px;
+        font-size: 16px;
+      }
+      ul {
+        list-style: none;
+        padding: 0;
+      }
+      li {
+        padding: 8px;
+        border: 1px solid #ddd;
+        margin-top: 5px;
+      }
+    </style>
+  </head>
+  <body>
+    <h2>Search List</h2>
+    <input
+      type="text"
+      id="search"
+      placeholder="Search items..."
+      onkeyup="onSearch()"
+    />
+
+    <ul id="list">
+      <li>Apple</li>
+      <li>Banana</li>
+      <li>Cherry</li>
+      <li>Grapes</li>
+      <li>Orange</li>
+      <li>Pineapple</li>
+      <li>Strawberry</li>
+    </ul>
+
+    <script>
+      function onSearch() {
+        const input = document.getElementById("search");
+        const filter = input.value.toUpperCase();
+        const list = document.querySelectorAll("#list li");
+        list.forEach((item) => {
+          const text = item.textContent || item.innerText;
+          item.style.display = text.toUpperCase().includes(filter)
+            ? ""
+            : "none";
+        });
+      }
+    </script>
+  </body>
+</html>
