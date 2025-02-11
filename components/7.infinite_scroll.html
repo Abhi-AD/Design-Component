@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Infinite Carousel</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      body {
+        width: 100vw;
+        height: 100vh;
+        background-color: rgb(14, 13, 13);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+      .carousel {
+        height: 50%;
+        width: 50%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        overflow: hidden;
+      }
+
+      .image-container {
+        display: flex;
+        gap: 20px;
+        align-items: center;
+        justify-content: center;
+        height: 100%;
+        animation: scroll 20s linear infinite;
+      }
+
+      .image-container img {
+        width: 350px;
+        height: 100%;
+        object-fit: cover;
+        border-radius: 10px;
+      }
+
+      @keyframes scroll {
+        0% {
+          transform: translateX(0);
+        }
+        100% {
+          transform: translateX(-50%);
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="carousel">
+      <div class="image-container" id="imageContainer"></div>
+    </div>
+
+    <script>
+      const images = [
+        "../img/6/1.jpg",
+        "../img/6/2.jpg",
+        "../img/6/3.jpeg",
+        "../img/6/4.jpg",
+      ];
+
+      // Function to generate image elements
+      const generateImages = () => {
+        const imageContainer = document.getElementById("imageContainer");
+
+        // Duplicate the images to create a seamless loop
+        const duplicatedImages = [...images, ...images, ...images, ...images];
+
+        // Use map to create <img> elements
+        const imageElements = duplicatedImages.map((imageSrc) => {
+          const img = document.createElement("img");
+          img.src = imageSrc;
+          img.alt = "Carousel Image";
+          return img;
+        });
+
+        // Append the generated images to the container
+        imageElements.forEach((img) => imageContainer.appendChild(img));
+      };
+
+      // Call the function to generate images
+      generateImages();
+
+      // Reset the position of the carousel to create a seamless loop
+      const imageContainer = document.getElementById("imageContainer");
+      imageContainer.addEventListener("animationiteration", () => {
+        imageContainer.style.transform = "translateX(0)";
+      });
+    </script>
+  </body>
+</html>
