@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Animated Search Box</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+    />
+    <style>
+      body {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        background-color: #f0f0f0;
+      }
+      .search-container {
+        position: relative;
+        display: flex;
+        align-items: center;
+        background-color: #00ebff;
+        border: 2px solid #00ebff;
+        border-radius: 30px;
+        padding: 5px;
+        transition: all 0.5s ease-in-out;
+      }
+      #input {
+        display: none; /* Initially hidden */
+        width: 0;
+        padding: 10px;
+        font-size: 16px;
+        outline: none;
+        border: none;
+        opacity: 0;
+        background-color: transparent;
+        visibility: hidden;
+        transition: all 0.5s ease-in-out;
+      }
+      .search-container.active #input {
+        display: block;
+        width: 200px;
+        opacity: 1;
+        visibility: visible;
+      }
+      .search-container.inactive #input {
+        width: 0;
+        opacity: 0;
+        visibility: hidden;
+      }
+      #btn {
+        border: none;
+        cursor: pointer;
+        padding: 12px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 18px;
+        color: white;
+        background-color: transparent;
+        width: 45px;
+        height: 45px;
+        transition: background 0.3s ease-in-out;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="search-container">
+      <input type="text" id="input" placeholder="Search..." />
+      <button id="btn">
+        <i class="fa fa-search"></i>
+      </button>
+    </div>
+
+    <script>
+      const btn = document.getElementById("btn");
+      const searchContainer = document.querySelector(".search-container");
+      const inputField = document.getElementById("input");
+
+      let isOpen = false;
+
+      btn.addEventListener("click", () => {
+        if (isOpen) {
+          searchContainer.classList.remove("active");
+          searchContainer.classList.add("inactive");
+
+          setTimeout(() => {
+            inputField.style.display = "none";
+          }, 500);
+        } else {
+          inputField.style.display = "block";
+          setTimeout(() => {
+            searchContainer.classList.add("active");
+            searchContainer.classList.remove("inactive");
+          }, 10);
+        }
+        isOpen = !isOpen;
+      });
+    </script>
+  </body>
+</html>
