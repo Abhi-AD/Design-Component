@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Age Calculator</title>
+    <style>
+      body {
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        background: linear-gradient(135deg, #6e7e8b, #8fa3b7);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        margin: 0;
+        color: #fff;
+      }
+
+      .container {
+        background-color: #333;
+        padding: 30px 40px;
+        border-radius: 15px;
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+        width: 450px;
+        text-align: center;
+        backdrop-filter: blur(10px);
+        height: 350px;
+      }
+
+      h1 {
+        color: #4caf50;
+        font-size: 30px;
+        margin-bottom: 25px;
+        font-weight: 600;
+      }
+
+      label {
+        font-size: 18px;
+        color: #f1f1f1;
+        margin-bottom: 12px;
+        display: block;
+      }
+
+      input[type="date"] {
+        padding: 12px;
+        font-size: 16px;
+        width: 100%;
+        margin-bottom: 25px;
+        border: none;
+        border-radius: 8px;
+        background-color: #444;
+        color: #fff;
+        box-sizing: border-box;
+        transition: background-color 0.3s ease;
+      }
+
+      input[type="date"]:focus {
+        background-color: #555;
+        border: 2px solid #4caf50;
+        outline: none;
+      }
+
+      button {
+        background-color: #4caf50;
+        color: #fff;
+        border: none;
+        padding: 12px 24px;
+        font-size: 18px;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        width: 100%;
+      }
+
+      button:hover {
+        background-color: #45a049;
+        transform: translateY(-3px);
+      }
+
+      #result {
+        margin-top: 20px;
+        font-size: 20px;
+        color: #f1f1f1;
+        font-weight: 600;
+        text-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>Age Calculator</h1>
+      <label for="birthdate">Enter your birthday</label>
+      <input type="date" id="birthdate" name="birthdate" />
+      <button onclick="calculateAge()">Calculate Age</button>
+      <p id="result"></p>
+    </div>
+
+    <script>
+      const today = new Date();
+      const maxDate = today.toISOString().split("T")[0];
+
+      const minDateObj = new Date();
+      minDateObj.setFullYear(today.getFullYear() - 60);
+      const minDate = minDateObj.toISOString().split("T")[0];
+
+      const birthdateInput = document.getElementById("birthdate");
+      birthdateInput.max = maxDate;
+      birthdateInput.min = minDate;
+
+      function calculateAge() {
+        const birthdateInput = document.getElementById("birthdate").value;
+        const birthdate = new Date(birthdateInput);
+        const today = new Date();
+        const resultElement = document.getElementById("result");
+
+        if (
+          !birthdateInput ||
+          isNaN(birthdate.getTime()) ||
+          birthdate > today ||
+          birthdate < minDateObj
+        ) {
+          resultElement.innerText = "Please enter a valid birthdate.";
+          return;
+        }
+
+        let ageYears = today.getFullYear() - birthdate.getFullYear();
+        let ageMonths = today.getMonth() - birthdate.getMonth();
+        let ageDays = today.getDate() - birthdate.getDate();
+
+        if (ageMonths < 0 || (ageMonths === 0 && ageDays < 0)) {
+          ageYears--;
+          ageMonths += 12;
+        }
+
+        if (ageDays < 0) {
+          const previousMonth = new Date(
+            today.getFullYear(),
+            today.getMonth(),
+            0
+          );
+          ageDays += previousMonth.getDate();
+          ageMonths--;
+        }
+
+        // Hide result if age is exactly 0 years, 0 months, and 0 days
+        if (ageYears === 0 && ageMonths === 0 && ageDays === 0) {
+          resultElement.innerText = "";
+          return;
+        }
+
+        // Construct the result string dynamically, hiding any 0 values
+        let resultParts = [];
+        if (ageYears > 0)
+          resultParts.push(`${ageYears} ${ageYears === 1 ? "year" : "years"}`);
+        if (ageMonths > 0)
+          resultParts.push(
+            `${ageMonths} ${ageMonths === 1 ? "month" : "months"}`
+          );
+        if (ageDays > 0)
+          resultParts.push(`${ageDays} ${ageDays === 1 ? "day" : "days"}`);
+
+        resultElement.innerText = "Your age is " + resultParts.join(", ") + ".";
+      }
+    </script>
+  </body>
+</html>
