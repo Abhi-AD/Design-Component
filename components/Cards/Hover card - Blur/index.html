@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Dynamic Card Grid</title>
+    <link
+      href="https://fonts.googleapis.com/css?family=Montserrat:400,700"
+      rel="stylesheet"
+    />
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: "Montserrat", sans-serif;
+        background-color: #000;
+      }
+
+      .hero-section {
+        display: flex;
+        justify-content: center;
+        padding: 64px 24px;
+      }
+
+      .card-grid {
+        display: grid;
+        grid-template-columns: repeat(1, 1fr);
+        gap: 24px;
+        max-width: 1200px;
+        width: 100%;
+      }
+
+      @media (min-width: 540px) {
+        .card-grid {
+          grid-template-columns: repeat(2, 1fr);
+        }
+      }
+
+      @media (min-width: 960px) {
+        .card-grid {
+          grid-template-columns: repeat(4, 1fr);
+        }
+      }
+
+      .card {
+        position: relative;
+        list-style: none;
+        overflow: hidden;
+        border-radius: 16px;
+      }
+
+      .card::before {
+        content: "";
+        display: block;
+        padding-bottom: 150%;
+        width: 100%;
+      }
+
+      .card__background {
+        background-size: cover;
+        background-position: center;
+        position: absolute;
+        inset: 0;
+        filter: brightness(0.75) saturate(1.2) contrast(0.85);
+        transition: transform 200ms linear, filter 200ms linear;
+      }
+
+      .card:hover .card__background {
+        transform: scale(1.05);
+      }
+
+      .card-grid:hover > .card:not(:hover) .card__background {
+        filter: brightness(0.5) saturate(0) contrast(1.2) blur(20px);
+      }
+
+      .card__content {
+        position: absolute;
+        top: 0;
+        left: 0;
+        padding: 16px;
+        color: rgba(255, 255, 255, 0.9);
+      }
+
+      .card__category {
+        font-size: 0.9rem;
+        text-transform: uppercase;
+        color: rgba(255, 255, 255, 0.6);
+        margin-bottom: 8px;
+      }
+
+      .card__heading {
+        font-size: 1.9rem;
+        line-height: 1.4;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="hero-section">
+      <div class="card-grid" id="cardContainer"></div>
+    </div>
+
+    <script>
+      const cardData = [
+        {
+          img: "https://images.unsplash.com/photo-1557187666-4fd70cf76254?auto=format&fit=crop&w=800&q=60",
+          category: "Category",
+          heading: "Card Heading",
+        },
+        {
+          img: "https://images.unsplash.com/photo-1556680262-9990363a3e6d?auto=format&fit=crop&w=800&q=60",
+          category: "Category",
+          heading: "Card Heading",
+        },
+        {
+          img: "https://images.unsplash.com/photo-1557187666-4fd70cf76254?auto=format&fit=crop&w=800&q=60",
+          category: "Category",
+          heading: "Card Heading",
+        },
+        {
+          img: "https://images.unsplash.com/photo-1556680262-9990363a3e6d?auto=format&fit=crop&w=800&q=60",
+          category: "Category",
+          heading: "Card Heading",
+        },
+        {
+          img: "https://images.unsplash.com/photo-1556680262-9990363a3e6d?auto=format&fit=crop&w=800&q=60",
+          category: "Category",
+          heading: "Card Heading",
+        },
+        {
+          img: "https://images.unsplash.com/photo-1556680262-9990363a3e6d?auto=format&fit=crop&w=800&q=60",
+          category: "Category",
+          heading: "Card Heading",
+        },
+        {
+          img: "https://images.unsplash.com/photo-1556680262-9990363a3e6d?auto=format&fit=crop&w=800&q=60",
+          category: "Category",
+          heading: "Card Heading",
+        },
+      ];
+
+      const cardContainer = document.getElementById("cardContainer");
+
+      cardContainer.innerHTML = cardData
+        .map(
+          (card) => `
+      <a class="card" href="#">
+        <div class="card__background" style="background-image: url(${card.img})"></div>
+        <div class="card__content">
+          <p class="card__category">${card.category}</p>
+          <h3 class="card__heading">${card.heading}</h3>
+        </div>
+      </a>
+    `
+        )
+        .join("");
+    </script>
+  </body>
+</html>
