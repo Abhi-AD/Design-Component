@@ -1,2 +1,15 @@
-img/
+
+# Ignore all image files
+*.jpg
+*.jpeg
 *.png
+*.gif
+*.svg
+*.webp
+*.bmp
+*.tiff
+*.ico
+
+*.mp3
+*.mp4
+*.vscode
