@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Password Validator</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
+      crossorigin="anonymous"
+    />
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: Arial, sans-serif;
+      }
+      .container {
+        height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        background: #6fa5f6;
+      }
+      .formbox {
+        background-color: #121726;
+        display: flex;
+        align-items: center;
+        padding: 10px;
+        border-radius: 5px;
+      }
+      input {
+        border: none;
+        background: none;
+        color: #fff;
+        padding: 5px;
+        outline: none;
+      }
+      .showPass {
+        cursor: pointer;
+        color: #fff;
+        margin-left: 10px;
+      }
+      .validator {
+        margin-top: 20px;
+        padding: 10px;
+        background-color: #121726;
+        color: white;
+        border-radius: 5px;
+      }
+      .validator p {
+        display: flex;
+        align-items: center;
+        font-size: 14px;
+      }
+      .validator i {
+        margin-right: 10px;
+      }
+      .valid {
+        color: green;
+      }
+      .invalid {
+        color: red;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="formbox">
+        <input
+          type="password"
+          id="myPass"
+          placeholder="Enter password"
+          oninput="validatePassword()"
+        />
+        <span class="showPass" onclick="togglePassword()">
+          <i class="fa-solid fa-eye-slash" id="eyeIcon"></i>
+        </span>
+      </div>
+      <div class="validator">
+        <p id="capital"><i class="fa-solid fa-xmark invalid"></i> Upper Case</p>
+        <p id="special">
+          <i class="fa-solid fa-xmark invalid"></i> Special Character
+        </p>
+        <p id="number"><i class="fa-solid fa-xmark invalid"></i> Number</p>
+        <p id="length">
+          <i class="fa-solid fa-xmark invalid"></i> More than 8 characters
+        </p>
+      </div>
+    </div>
+    <script>
+      function togglePassword() {
+        let password = document.getElementById("myPass");
+        let eyeIcon = document.getElementById("eyeIcon");
+        if (password.type === "password") {
+          password.type = "text";
+          eyeIcon.classList.remove("fa-eye-slash");
+          eyeIcon.classList.add("fa-eye");
+        } else {
+          password.type = "password";
+          eyeIcon.classList.remove("fa-eye");
+          eyeIcon.classList.add("fa-eye-slash");
+        }
+      }
+
+      function validatePassword() {
+        let password = document.getElementById("myPass").value;
+        validateRule(password, /[A-Z]/, "capital");
+        validateRule(password, /[!@#$%^&*(),.?":{}|<>]/, "special");
+        validateRule(password, /[0-9]/, "number");
+        validateRule(password, /.{8,}/, "length");
+      }
+
+      function validateRule(password, regex, id) {
+        let element = document.getElementById(id);
+        let icon = element.querySelector("i");
+        if (regex.test(password)) {
+          icon.classList.remove("fa-xmark", "invalid");
+          icon.classList.add("fa-check", "valid");
+        } else {
+          icon.classList.remove("fa-check", "valid");
+          icon.classList.add("fa-xmark", "invalid");
+        }
+      }
+    </script>
+  </body>
+</html>
