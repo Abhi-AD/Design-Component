@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Styled Marquee</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        background: linear-gradient(to right, #01162b, #0a0a0a);
+        color: #333;
+        padding: 40px;
+        height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+
+      marquee {
+        border: 1px solid #ffffff;
+        background-color: transparent;
+        padding: 20px 40px;
+        border-radius: 12px;
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+        font-size: 18px;
+        color: #ffffff;
+        max-width: 80%;
+      }
+    </style>
+  </head>
+  <body>
+    <marquee direction="left">
+      Lorem ipsum dolor sit amet consectetur adipisicing elit. Quis, distinctio
+      in ipsum aperiam tenetur dolore commodi, sapiente nihil rerum amet
+      architecto incidunt debitis laudantium odio laborum dolores corporis
+      veritatis itaque.
+    </marquee>
+  </body>
+</html>
