@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Titan Style Digital Watch</title>
+    <style>
+      body {
+        margin: 0;
+        background-color: #111;
+        height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-family: "Courier New", monospace;
+      }
+
+      .watch-body {
+        width: 320px;
+        height: 420px;
+        background: radial-gradient(circle at center, #333 30%, #000);
+        border-radius: 25px;
+        border: 8px solid #888;
+        box-shadow: 0 0 20px #444;
+        padding: 30px 20px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        position: relative;
+      }
+
+      .watch-brand {
+        font-size: 1.5rem;
+        color: #ccc;
+        font-weight: bold;
+        margin-bottom: 20px;
+      }
+
+      .watch-screen {
+        width: 100%;
+        background-color: #000;
+        border: 4px solid #666;
+        border-radius: 10px;
+        padding: 20px;
+        box-shadow: inset 0 0 15px #0ff8;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .time-row {
+        display: flex;
+        justify-content: center;
+        gap: 15px;
+      }
+
+      .time-box {
+        background-color: #222;
+        border: 2px solid #0ff;
+        color: #0ff;
+        padding: 10px 15px;
+        font-size: 2.5rem;
+        border-radius: 8px;
+        min-width: 70px;
+        text-align: center;
+      }
+
+      .labels-row {
+        display: flex;
+        justify-content: center;
+        gap: 15px;
+        margin-top: 5px;
+      }
+
+      .label {
+        font-size: 0.9rem;
+        color: #aaa;
+        text-align: center;
+        min-width: 70px;
+      }
+
+      .ampm-box {
+        margin-top: 15px;
+        background-color: #222;
+        color: #0ff;
+        border: 2px solid #0ff;
+        padding: 8px 16px;
+        border-radius: 6px;
+        font-size: 1.2rem;
+        text-transform: uppercase;
+      }
+
+      #date {
+        margin-top: 10px;
+        font-size: 1rem;
+        color: #fff;
+      }
+
+      .center-dot {
+        width: 12px;
+        height: 12px;
+        background-color: #0ff;
+        border-radius: 50%;
+        position: absolute;
+        bottom: 20px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="watch-body">
+      <div class="watch-brand">TITAN</div>
+      <div class="watch-screen">
+        <div class="time-row">
+          <div class="time-box" id="hours">00</div>
+          <div class="time-box" id="minutes">00</div>
+          <div class="time-box" id="seconds">00</div>
+        </div>
+        <div class="labels-row">
+          <div class="label">HOURS</div>
+          <div class="label">MINUTES</div>
+          <div class="label">SECONDS</div>
+        </div>
+        <div class="ampm-box" id="ampm">AM</div>
+      </div>
+      <div id="date">Date</div>
+      <div class="center-dot"></div>
+    </div>
+
+    <script>
+      function updateTime() {
+        const now = new Date();
+
+        let hours = now.getHours();
+        const minutes = now.getMinutes();
+        const seconds = now.getSeconds();
+        const ampm = hours >= 12 ? "PM" : "AM";
+        hours = hours % 12 || 12;
+
+        const day = now.getDate();
+        const year = now.getFullYear();
+        const monthNames = [
+          "Jan",
+          "Feb",
+          "Mar",
+          "Apr",
+          "May",
+          "Jun",
+          "Jul",
+          "Aug",
+          "Sep",
+          "Oct",
+          "Nov",
+          "Dec",
+        ];
+        const month = monthNames[now.getMonth()];
+
+        const formattedDate = `${day} ${month} ${year}`;
+
+        document.getElementById("hours").textContent = String(hours).padStart(
+          2,
+          "0"
+        );
+        document.getElementById("minutes").textContent = String(
+          minutes
+        ).padStart(2, "0");
+        document.getElementById("seconds").textContent = String(
+          seconds
+        ).padStart(2, "0");
+        document.getElementById("ampm").textContent = ampm;
+        document.getElementById("date").textContent = formattedDate;
+      }
+
+      updateTime();
+      setInterval(updateTime, 1000);
+    </script>
+  </body>
+</html>
